@@ -5,6 +5,7 @@ import com.Android.Academia.model.Funcionario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,7 +15,7 @@ public interface FuncionarioRepo extends JpaRepository<Funcionario, Long> {
 
     Optional<Funcionario> findFuncionariosByCPF(String cpf);
 
-    Optional<Funcionario> findFuncionariosByNome(String nome);
+    List<Funcionario> findFuncionariosByNome(String nome);
 
     Optional<Funcionario> findFuncionarioByTelefone(String telefone);
 
@@ -23,7 +24,7 @@ public interface FuncionarioRepo extends JpaRepository<Funcionario, Long> {
     Optional<Funcionario> findAllByCPF(String cpf);
 
     //Procura via Enum
-    Optional<Funcionario> findAllByFuncao(Funcao funcao);
+    List<Funcionario> findAllByFuncao(Funcao funcao);
     
     boolean existsFuncionarioByNome(String nome);
     boolean existsFuncionarioByEmail(String email);

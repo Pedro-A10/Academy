@@ -3,6 +3,7 @@ package com.Android.Academia.repository;
 import com.Android.Academia.model.Aluno;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AlunoRepo extends JpaRepository<Aluno, Long> {
@@ -13,9 +14,9 @@ public interface AlunoRepo extends JpaRepository<Aluno, Long> {
 
     Optional<Aluno> findAlunosByEmail(String email);
 
-    Optional<Aluno> findAlunosByNome(String nome);
+    List<Aluno> findAlunosByNome(String nome);
 
-    Optional<Aluno> findAlunosByTelefone(String telefone);
+    List<Aluno> findAlunosByTelefone(String telefone);
 
     boolean existsAlunosByNome(String nome);
     boolean existsAlunosByEmail(String email);
