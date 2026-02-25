@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Aluno extends User{
 
-    @OneToMany
+    //Um aluno tem varias listas
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
     private List<ListaExercicio> listaDeTreino = new ArrayList<>();
 }
