@@ -4,5 +4,7 @@ public enum Funcao {
     STAFF,
     RECEPCAO,
     LIMPEZA,
-    MANUTENCAO
+    MANUTENCAO,
+    PROFESSOR_ACADEMIA,
+    PROFESSOR_PARTICULAR
 }
