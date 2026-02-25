@@ -1,5 +1,6 @@
 package com.Android.Academia.model;
 
+import com.Android.Academia.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -54,4 +55,7 @@ public class User {
             message = "A senha deve conter números e símbolos especiais.")
     @Column(unique = true)
     private String password;
+
+    //Roles: Staff, funcionário e aluno
+    private Role role;
 }
