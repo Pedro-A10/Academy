@@ -1,9 +1,6 @@
 package com.Android.Academia.service;
 
-import com.Android.Academia.enums.Funcao;
-import com.Android.Academia.enums.Role;
 import com.Android.Academia.model.Aluno;
-import com.Android.Academia.model.Funcionario;
 import com.Android.Academia.model.User;
 import com.Android.Academia.repository.AlunoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +19,9 @@ public class AlunoService {
     @Autowired
     AlunoRepo alunoR;
 
+    @Autowired
+    private AutorizacaoService autorizacaoService;
+
     /*TODO: implementar uma mapper e uma dto de alunos
         para substituir os métodos que utilizam o AlunoRepo diretamente.
         Criar exceptions personalizadas para os métodos que podem gerar valores incorretos
@@ -29,20 +30,6 @@ public class AlunoService {
     //hashing de senhas usar só depois de criar os dto e mapper
     @Autowired
     PasswordEncoder passwordEncoder;
-
-    //Metodo auxiliar para permissões de CRUD
-    private void verificarPermissoes(User permitido) {
-        //Permissão para staff
-        if (permitido.getRole() == Role.STAFF) {
-            return;
-        }
-        //permissão para recpção
-        if (permitido instanceof Funcionario funcionario &&
-                funcionario.getFuncao() == Funcao.RECEPCAO) {
-            return;
-        }
-        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Sem permissão para gerenciar aluno");
-    }
 
     //Get
     public Optional<Aluno> findAlunosById(Long id) {
@@ -75,13 +62,13 @@ public class AlunoService {
     }
 
     //Operações de CRUD (CREATE / DELETE)
-    public void criarAluno(User permitido, Aluno novoAluno) {
-        verificarPermissoes(permitido);
+    public void criarAluno(User permitido, Aluno novoAluno) throws AccessDeniedException {
+        autorizacaoService.verificarPermissoes(permitido);
         alunoR.save(novoAluno);
     }
 
-    public void deletarAlunoById(User permitido, Long id) {
-        verificarPermissoes(permitido);
+    public void deletarAlunoById(User permitido, Long id) throws AccessDeniedException {
+        autorizacaoService.verificarPermissoes(permitido);
         Aluno aluno = alunoR.findById(id)
                 .orElseThrow(() -> new ResponseStatusException
                         (HttpStatus.NOT_FOUND, "Aluno não encontrado com id: " + id));
