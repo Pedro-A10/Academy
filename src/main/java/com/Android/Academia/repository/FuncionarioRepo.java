@@ -25,8 +25,7 @@ public interface FuncionarioRepo extends JpaRepository<Funcionario, Long> {
 
     //Procura via Enum
     List<Funcionario> findAllByFuncao(Funcao funcao);
-    
-    boolean existsFuncionarioByNome(String nome);
+
     boolean existsFuncionarioByEmail(String email);
     boolean existsFuncionarioByCPF(String cpf);
 

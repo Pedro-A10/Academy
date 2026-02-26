@@ -18,7 +18,6 @@ public interface AlunoRepo extends JpaRepository<Aluno, Long> {
 
     List<Aluno> findAlunosByTelefone(String telefone);
 
-    boolean existsAlunosByNome(String nome);
     boolean existsAlunosByEmail(String email);
     boolean existsAlunosByCPF(String cpf);
 
